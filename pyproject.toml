@@ -1,0 +1,42 @@
+[project]
+name = "siege"
+version = "0.1.0"
+description = "Red-team engagement graph & evidence board for CPTC teams (glue + dashboard over existing tooling)."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+    "fastapi>=0.110",
+    "uvicorn[standard]>=0.29",
+    "defusedxml>=0.7.1",
+    "python-multipart>=0.0.9",  # FastAPI file uploads (Phase 1 import endpoint)
+    "websockets>=12.0",          # WS push (Phase 2, declared now)
+]
+
+[project.optional-dependencies]
+tls = [
+    "cryptography>=42.0",  # --tls-selfsigned cert generation
+]
+ui = [
+    "playwright>=1.40",  # headless browser smoke test (then: playwright install chromium)
+]
+dev = [
+    "pytest>=8.0",
+    "httpx>=0.27",  # FastAPI TestClient
+    "cryptography>=42.0",
+    "playwright>=1.40",
+]
+
+[project.scripts]
+siege = "siege.server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/siege"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>siege</title>
+  <link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+  <header>
+    <strong id="engagement">siege</strong>
+    <span id="live" class="dot" title="live updates">●</span>
+    <label title="Your name — tags evidence, findings and edges you add">
+      operator <input id="operator" placeholder="operator" maxlength="60" size="10">
+    </label>
+    <form id="import-form" title="Import nmap XML">
+      <input type="file" name="file" accept=".xml" required>
+      <button type="submit">Import nmap</button>
+    </form>
+    <form id="bh-form" title="Import BloodHound computers (JSON or SharpHound zip)">
+      <input type="file" name="file" accept=".json,.zip" required>
+      <button type="submit">Import BloodHound</button>
+    </form>
+    <form id="faraday-form" title="Import Faraday workspace export (JSON)">
+      <input type="file" name="file" accept=".json" required>
+      <button type="submit">Import Faraday</button>
+    </form>
+    <form id="scope-form" title="Import scope (CIDRs; '!' or 'out' to exclude)">
+      <input type="file" name="file" accept=".txt,.scope" required>
+      <button type="submit">Import scope</button>
+    </form>
+    <form id="subnets-form" title="Import subnets for graph grouping (CIDR + optional label per line)">
+      <input type="file" name="file" accept=".txt,.subnets" required>
+      <button type="submit">Import subnets</button>
+    </form>
+    <a id="export-link" class="btn" href="#">Export evidence</a>
+    <span id="status" role="status"></span>
+  </header>
+  <div id="scope-banner" hidden></div>
+  <main>
+    <div id="graph"></div>
+    <aside id="panel">
+      <p class="muted" id="panel-empty">Click a host to see services, findings and evidence.</p>
+      <section id="detail" hidden>
+        <div class="titlebar">
+          <h2 id="d-title"></h2>
+          <button type="button" id="delete-host" class="danger" title="Delete this host and all its data">Delete host</button>
+        </div>
+        <p id="d-oos" class="oos" hidden>⚠ OUT OF SCOPE — do not act on this host.</p>
+
+        <form id="state-form" class="row">
+          <label>State
+            <select name="state">
+              <option>discovered</option><option>enumerated</option><option>vulnerable</option>
+              <option>foothold</option><option>owned</option><option>out_of_scope</option>
+            </select>
+          </label>
+          <label class="chk"><input type="checkbox" name="in_scope"> in scope</label>
+          <button type="submit">Save</button>
+        </form>
+
+        <dl id="d-facts"></dl>
+
+        <h3>Services</h3>
+        <table><thead><tr><th>Port</th><th>Name</th><th>Product / version</th></tr></thead>
+          <tbody id="d-services"></tbody></table>
+
+        <h3>Findings</h3>
+        <ul id="d-findings"></ul>
+        <form id="finding-form" class="row">
+          <input name="title" placeholder="Finding title" required maxlength="300">
+          <select name="severity">
+            <option>info</option><option>low</option><option>medium</option>
+            <option>high</option><option>critical</option>
+          </select>
+          <button type="submit">Add finding</button>
+        </form>
+
+        <h3>Edges from this host</h3>
+        <ul id="d-edges"></ul>
+        <form id="edge-form" class="row">
+          <select name="dst" id="edge-dst"></select>
+          <select name="type"><option>pivot</option><option>creds_reuse</option><option>operator</option></select>
+          <input name="bh_edge" placeholder="BloodHound edge (e.g. AdminTo) — auto-describes" maxlength="100">
+          <input name="label" placeholder="Label (optional)" maxlength="200">
+          <button type="submit">Draw edge</button>
+        </form>
+
+        <h3>Evidence</h3>
+        <ul id="d-evidence"></ul>
+        <form id="evidence-form" class="row">
+          <select name="target" id="ev-target"></select>
+          <select name="kind"><option>screenshot</option><option>log</option><option>note</option></select>
+          <input name="caption" placeholder="Caption">
+          <input type="file" name="file">
+          <textarea name="note" placeholder="…or note text" rows="2"></textarea>
+          <button type="submit">Attach evidence</button>
+        </form>
+      </section>
+    </aside>
+  </main>
+  <script src="/static/cytoscape.min.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

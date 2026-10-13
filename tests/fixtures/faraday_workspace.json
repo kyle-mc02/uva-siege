@@ -1,0 +1,37 @@
+{
+  "hosts": [
+    {
+      "ip": "10.10.10.20",
+      "hostnames": ["fileserver.lab.example"],
+      "os": "Windows Server 2019",
+      "services": [
+        {
+          "id": "svc-smb",
+          "port": 445,
+          "protocol": "tcp",
+          "name": "microsoft-ds",
+          "version": "Samba 4.15.13",
+          "status": "open",
+          "vulnerabilities": [
+            { "name": "SMB signing not required", "severity": "med", "desc": "Server allows unsigned SMB, enabling relay." }
+          ]
+        },
+        { "port": 23, "protocol": "tcp", "name": "telnet", "status": "closed" }
+      ],
+      "vulnerabilities": [
+        { "name": "EternalBlue (MS17-010) likely", "severity": "critical", "desc": "Unpatched SMBv1.", "resolution": "Patch MS17-010." }
+      ]
+    },
+    {
+      "ip": "10.10.10.50",
+      "hostnames": ["web01.lab.example"],
+      "os": "Ubuntu 22.04",
+      "services": [
+        { "port": 80, "protocol": "tcp", "name": "http", "version": "nginx 1.18.0", "status": "open" }
+      ]
+    }
+  ],
+  "vulnerabilities": [
+    { "target": "10.10.10.99", "name": "Orphan vuln for an unscanned host", "severity": "low" }
+  ]
+}

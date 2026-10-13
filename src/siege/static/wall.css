@@ -1,0 +1,14 @@
+/* Read-only wallboard for a room TV. Big, glanceable, no controls. */
+body.wall { display: flex; height: 100vh; overflow: hidden; }
+#wall-graph { flex: 1; min-width: 0; }
+#wall-side { width: 340px; padding: 20px; background: #0b0f13; border-left: 1px solid var(--line); overflow: hidden; display: flex; flex-direction: column; }
+#wall-title { font-size: 22px; margin: 0 0 16px; }
+#wall-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+.stat { background: #131a21; border: 1px solid var(--line); border-radius: 6px; padding: 10px; }
+.stat b { font-size: 26px; display: block; }
+.stat span { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+#wall-side h2 { margin: 0 0 8px; }
+#wall-ticker { list-style: none; margin: 0; padding: 0; overflow-y: hidden; flex: 1; font-size: 14px; }
+#wall-ticker li { padding: 6px 0; border-bottom: 1px solid var(--line); animation: flash 1.2s ease-out; }
+#wall-ticker time { color: var(--muted); font-size: 11px; margin-right: 6px; }
+@keyframes flash { from { background: #1d2a3a; } to { background: transparent; } }

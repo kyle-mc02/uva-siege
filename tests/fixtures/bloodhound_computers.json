@@ -1,0 +1,33 @@
+{
+  "meta": { "type": "computers", "count": 3, "version": 5 },
+  "data": [
+    {
+      "Properties": {
+        "name": "FILESERVER.LAB.EXAMPLE",
+        "domain": "LAB.EXAMPLE",
+        "distinguishedname": "CN=FILESERVER,OU=Servers,DC=LAB,DC=EXAMPLE",
+        "operatingsystem": "Windows Server 2019 Datacenter",
+        "samaccountname": "FILESERVER$",
+        "highvalue": true
+      }
+    },
+    {
+      "Properties": {
+        "name": "GW.LAB.EXAMPLE",
+        "domain": "LAB.EXAMPLE",
+        "operatingsystem": "Ubuntu 22.04 (Linux)",
+        "samaccountname": "GW$",
+        "highvalue": false
+      }
+    },
+    {
+      "Properties": {
+        "name": "WS07.LAB.EXAMPLE",
+        "domain": "LAB.EXAMPLE",
+        "operatingsystem": "Windows 10 Pro",
+        "samaccountname": "WS07$",
+        "highvalue": false
+      }
+    }
+  ]
+}

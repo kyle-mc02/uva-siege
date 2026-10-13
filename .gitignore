@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+
+# Engagement data — never commit live scan output or evidence
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.db
+/engagements/
+/evidence_store/
+
+# Built frontend (vendored into src/siege/static at release time)
+/web/node_modules/
+/web/dist/

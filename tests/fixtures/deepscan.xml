@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sanitized sample: a later service/version/OS/traceroute deep scan
+     (nmap -sV -O with traceroute) of the same two live hosts found by
+     pingsweep.xml. One service banner deliberately contains HTML/script text
+     to prove siege stores it as inert text, not markup
+     (honeypot-banner-as-stored-XSS is a real risk against our own UI). -->
+<!DOCTYPE nmaprun>
+<nmaprun scanner="nmap" args="nmap -sV -O --traceroute -oX deepscan.xml 10.10.10.5,20" start="1760003600" version="7.94" xmloutputversion="1.05">
+  <host starttime="1760003601" endtime="1760003650">
+    <status state="up" reason="arp-response"/>
+    <address addr="10.10.10.5" addrtype="ipv4"/>
+    <address addr="00:0c:29:aa:bb:cc" addrtype="mac" vendor="VMware"/>
+    <hostnames>
+      <hostname name="gw.lab.example" type="PTR"/>
+    </hostnames>
+    <ports>
+      <port protocol="tcp" portid="22">
+        <state state="open" reason="syn-ack"/>
+        <service name="ssh" product="OpenSSH" version="8.9p1 Ubuntu 3ubuntu0.4" extrainfo="Ubuntu Linux; protocol 2.0" method="probed" conf="10"/>
+      </port>
+      <port protocol="tcp" portid="80">
+        <state state="open" reason="syn-ack"/>
+        <service name="http" product="nginx" version="1.18.0" method="probed" conf="10"/>
+        <script id="http-title" output="&lt;script&gt;alert(document.cookie)&lt;/script&gt; Welcome"/>
+      </port>
+    </ports>
+    <os>
+      <osmatch name="Linux 5.15 - 5.19" accuracy="96"/>
+    </os>
+    <trace proto="icmp">
+      <hop ttl="1" ipaddr="10.10.10.1" rtt="0.30"/>
+      <hop ttl="2" ipaddr="10.10.10.5" rtt="0.45"/>
+    </trace>
+  </host>
+  <host starttime="1760003651" endtime="1760003700">
+    <status state="up" reason="echo-reply"/>
+    <address addr="10.10.10.20" addrtype="ipv4"/>
+    <hostnames>
+      <hostname name="fileserver.lab.example" type="PTR"/>
+    </hostnames>
+    <ports>
+      <port protocol="tcp" portid="445">
+        <state state="open" reason="syn-ack"/>
+        <service name="microsoft-ds" product="Samba smbd" version="4.15.13" extrainfo="workgroup: WORKGROUP" method="probed" conf="10"/>
+      </port>
+      <port protocol="tcp" portid="3389">
+        <state state="open|filtered" reason="no-response"/>
+        <service name="ms-wbt-server" product="&quot;&gt;&lt;img src=x onerror=alert(1)&gt; FakeRDP" method="table" conf="3"/>
+      </port>
+      <port protocol="tcp" portid="23">
+        <state state="closed" reason="reset"/>
+        <service name="telnet"/>
+      </port>
+    </ports>
+    <os>
+      <osmatch name="Microsoft Windows Server 2019" accuracy="90"/>
+    </os>
+    <trace proto="icmp">
+      <hop ttl="1" ipaddr="10.10.10.1" rtt="0.30"/>
+      <hop ttl="2" ipaddr="10.10.10.20" rtt="0.52"/>
+    </trace>
+  </host>
+  <runstats>
+    <finished time="1760003700" elapsed="100.0" summary="scan complete"/>
+    <hosts up="2" down="0" total="2"/>
+  </runstats>
+</nmaprun>
